@@ -45,10 +45,10 @@ function initButtons() {
 
   render.addEventListener('click', tryRender);
   getSvg.addEventListener('click', function() {
-    window.open('/render/svg?uml=' + editor.value);
+    window.open('/render/svg?uml=' + encodeURIComponent(editor.value));
   });
   getPng.addEventListener('click', function() {
-    window.open('/render/png?uml=' + editor.value);
+    window.open('/render/png?uml=' + encodeURIComponent(editor.value));
   });
 
   return {
