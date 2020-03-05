@@ -41,3 +41,7 @@ textarea {
 textarea:focus {
   outline: none;
 }
+
+#output div {
+  width: 100%;
+}
