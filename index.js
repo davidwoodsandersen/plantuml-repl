@@ -3,8 +3,6 @@ const fs = require('fs');
 const express = require('express');
 const plantuml = require('node-plantuml');
 
-plantuml.useNailgun();
-
 const PORT = process.env.PORT || 3000;
 const app = express();
 
@@ -26,13 +24,11 @@ app.get('/render/:format', (req, res) => {
   res.setHeader('Content-Type', format == 'svg' ? 'image/svg+xml' : 'image/png');
 
   try {
-    console.log(input);
-    var decode = plantuml.decode(input);
-    console.log(decode);
-    var gen = plantuml.generate({ format: format });
+    const rendered = plantuml.generate(input, { format: format }, function(err) {
+      if (err) throw new Error(err);
+    });
 
-    decode.out.pipe(gen.in);
-    gen.out.pipe(res);
+    rendered.out.pipe(res);
   } catch (e) {
     console.log(e);
     res.status(500).send(e.toString());
