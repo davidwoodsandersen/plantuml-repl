@@ -40,15 +40,21 @@ function initOutput() {
 // Initializes button elements:
 function initButtons() {
   var render = document.querySelector('#render');
-  var saveAsSvg = document.querySelector('#svg');
-  var saveAsPng = document.querySelector('#png');
+  var getSvg = document.querySelector('#svg');
+  var getPng = document.querySelector('#png');
 
   render.addEventListener('click', tryRender);
+  getSvg.addEventListener('click', function() {
+    window.open('/render/svg?uml=' + editor.value);
+  });
+  getPng.addEventListener('click', function() {
+    window.open('/render/png?uml=' + editor.value);
+  });
 
   return {
     render: render,
-    saveAsSvg: saveAsSvg,
-    saveAsPng: saveAsPng
+    getSvg: getSvg,
+    getPng: getPng
   };
 }
 
