@@ -24,7 +24,11 @@ app.get('/render/:format', (req, res) => {
   res.setHeader('Content-Type', format == 'svg' ? 'image/svg+xml' : 'image/png');
 
   try {
-    const rendered = plantuml.generate(input, { format: format }, function(err) {
+    const options = {
+      format: format,
+      config: 'monochrome'
+    };
+    const rendered = plantuml.generate(input, options, function(err) {
       if (err) throw new Error(err);
     });
 
