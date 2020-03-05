@@ -1,6 +1,7 @@
 // Global variables:
 var editor;
 var output;
+var buttons;
 
 // Utility method for making HTTP GET requests:
 function request(url, callback) {
@@ -12,33 +13,23 @@ function request(url, callback) {
 
 // Insert the result of the render request
 // into the output div:
-function tryRender(input) {
-  var endpoint = '/render/svg?uml=' + encodeURIComponent(input);
+function tryRender() {
+  setOutput('<p>Rendering...</p>');
+  var endpoint = '/render/svg?uml=' + encodeURIComponent(editor.value);
   request(endpoint, function() {
-    output.innerHTML = this.responseText;
+    setOutput(this.responseText);
   });
 }
 
-// Show in-progress message to user:
-function setRenderNotice() {
-  output.innerHTML = '<p>Rendering...</p>';
+// Utility method for setting output HTML:
+function setOutput(html) {
+  output.innerHTML = html;
 }
 
 // Initializes the text editor by adding
 // a throttled "keyup" event listener:
 function initEditor() {
-  var editor = document.querySelector('#editor textarea');
-  var timeout = null;
-
-  editor.addEventListener('keyup', function(e) {
-    clearTimeout(timeout);
-    timeout = setTimeout(function() {
-      setRenderNotice();
-      tryRender(editor.value);
-    }, 1000);
-  });
-
-  return editor;
+  return document.querySelector('#editor textarea');
 }
 
 // Initializes a reference to the output div:
@@ -46,10 +37,26 @@ function initOutput() {
   return document.querySelector('#output div');
 }
 
+// Initializes button elements:
+function initButtons() {
+  var render = document.querySelector('#render');
+  var saveAsSvg = document.querySelector('#svg');
+  var saveAsPng = document.querySelector('#png');
+
+  render.addEventListener('click', tryRender);
+
+  return {
+    render: render,
+    saveAsSvg: saveAsSvg,
+    saveAsPng: saveAsPng
+  };
+}
+
 // Application entrypoint:
 function main() {
   editor = initEditor();
   output = initOutput();
+  buttons = initButtons();
 }
 
 main();
