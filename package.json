@@ -1,0 +1,15 @@
+{
+  "name": "plantuml-repl",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "serve": "node ./index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "node-plantuml": "^0.9.0"
+  }
+}
