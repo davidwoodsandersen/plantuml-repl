@@ -7,6 +7,8 @@ const app = express();
 
 const html = fs.readFileSync(path.resolve(__dirname, './public/index.html')).toString('utf8');
 
+app.use(express.static('public'));
+
 app.get('/', (req, res) => {
   res.setHeader('Content-Type', 'text/html');
   res.send(html);
