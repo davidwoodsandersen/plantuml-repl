@@ -2,6 +2,8 @@
 
 Browser-based REPL for creating UML diagrams with [PlantUML](https://plantuml.com/).
 
+![Demo Screenshot](screenshot.png)
+
 ## Requirements
 
 - Node
