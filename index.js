@@ -1,6 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 const express = require('express');
+const bodyParser = require('body-parser');
 const plantuml = require('node-plantuml');
 
 const PORT = process.env.PORT || 3000;
@@ -10,22 +11,23 @@ const html = fs.readFileSync(path.resolve(__dirname, './public/index.html')).toS
 
 app.use(express.static('public'));
 
+app.use(bodyParser.json());
+
 app.get('/', (req, res) => {
   res.setHeader('Content-Type', 'text/html');
   res.send(html);
 });
 
-app.get('/render/:format', (req, res) => {
-  const format = req.params.format;
-  const input = decodeURIComponent(req.query.uml);
+app.post('/render/svg', (req, res) => {
+  const input = decodeURIComponent(req.body.uml);
 
-  console.log(`Rendering as ${format.toUpperCase()}: ${input}`);
+  console.log(`Rendering as SVG: ${input}`);
 
-  res.setHeader('Content-Type', format == 'svg' ? 'image/svg+xml' : 'image/png');
+  res.setHeader('Content-Type', 'image/svg+xml');
 
   try {
     const options = {
-      format: format,
+      format: 'svg',
       config: 'monochrome'
     };
     const rendered = plantuml.generate(input, options, function(err) {
