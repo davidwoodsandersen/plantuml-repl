@@ -6,8 +6,8 @@ Browser-based REPL for creating UML diagrams with [PlantUML](https://plantuml.co
 
 ## Requirements
 
-- Node
-- Java
+- Docker
+- Docker Compose
 
 ## Getting Started
 

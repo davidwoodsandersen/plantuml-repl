@@ -1,0 +1,12 @@
+version: '3'
+services:
+  plantuml-repl:
+    container_name: plantuml-repl
+    restart: always
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - "3000:3000"
+    working_dir: /usr/src/app
+    command: npm run serve
